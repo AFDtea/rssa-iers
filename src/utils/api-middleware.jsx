@@ -1,4 +1,4 @@
-export const API = process.env.NODE_ENV === "production" ? "https://rssa.recsys.dev/newrs/api/v1/"
+export const API = process.env.NODE_ENV !== "production" ? "https://rssa.recsys.dev/newrs/api/v1/"
 	: "http://localhost:8000/";
 
 export const CORSHeaders = {
@@ -30,7 +30,10 @@ export function put(path: string, data: any, userdata) {
 function bodyRequest(method: string, path: string, data: any, headers) {
 	return fetch(API + path, {
 		method: method,
-		headers: headers,
+		headers: {
+			'Content-Type': 'application/json',
+			...headers
+		  },
 		body: JSON.stringify(data)
 	});
 }
